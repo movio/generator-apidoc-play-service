@@ -2,9 +2,9 @@ import Dependencies._
 
 organization := "<%= props.organization %>"
 
-name := "<%= props.applicationName %>"
+name := "<%= props.appName %>"
 
-scalaVersion := "2.11.7",
+scalaVersion := "2.11.7"
 
 lazy val svc = project.in(file("."))
   .settings(commonSettings: _*)
