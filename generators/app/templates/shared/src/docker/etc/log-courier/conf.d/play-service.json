@@ -1,0 +1,8 @@
+[{
+  "paths": [
+    "/var/log/supervisor/play-svc.log"
+  ],
+  "fields": {
+    "type": "<%= props.appName %>"
+  }
+}]
