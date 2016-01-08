@@ -16,3 +16,5 @@ COPY <%= props.appName %>/bin /var/<%= props.appName %>/bin
 
 COPY src/main/docker/bin /usr/local/bin/
 COPY src/main/docker/etc /etc/
+
+ENV SVC_MAX_MEMORY <%= props.maxMemory %>

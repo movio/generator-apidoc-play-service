@@ -6,12 +6,13 @@ var _ = require('lodash-fp');
 
 module.exports = yeoman.generators.Base.extend({
 
-  prompting: function () {
+  prompting: function() {
     var done = this.async();
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the magnificent ' + chalk.red('generator-apidoc-play-service') + ' generator!'
+      'Welcome to the magnificent ' + chalk.red(
+        'generator-apidoc-play-service') + ' generator!'
     ));
 
     var prompts = [{
@@ -29,10 +30,16 @@ module.exports = yeoman.generators.Base.extend({
       type: 'input',
       name: 'appName',
       message: 'Application name (eg in github)',
-      default: function (answers) {
+      default: function(answers) {
         var abbrev = answers.organization.match(/\b(\w)/g).join('');
-        return abbrev + '-' + _.kebabCase(answers.projectName) + '-svc';
+        return abbrev + '-' + _.kebabCase(answers.projectName) +
+          '-svc';
       }
+    }, {
+      type: 'input',
+      name: 'maxMemory',
+      message: 'Max memory',
+      default: '128'
     }, {
       type: 'confirm',
       name: 'useApidoc',
@@ -42,10 +49,10 @@ module.exports = yeoman.generators.Base.extend({
       type: 'input',
       name: 'apidocOrg',
       message: 'apidoc organization',
-      when: function (answers) {
+      when: function(answers) {
         return answers.useApidoc;
       },
-      default: function (answers) {
+      default: function(answers) {
         return answers.organization;
       },
       store: true
@@ -53,39 +60,41 @@ module.exports = yeoman.generators.Base.extend({
       type: 'input',
       name: 'apidocApp',
       message: 'apidoc application name',
-      when: function (answers) {
+      when: function(answers) {
         return answers.useApidoc;
       },
-      default: function (answers) {
+      default: function(answers) {
         return _.kebabCase(answers.projectName);
       }
     }, {
       type: 'input',
       name: 'apidocVersion',
       message: 'apidoc application version',
-      when: function (answers) {
+      when: function(answers) {
         return answers.useApidoc;
       },
       default: '0.1.0-SNAPSHOT'
     }];
 
-    this.prompt(prompts, function (props) {
+    this.prompt(prompts, function(props) {
       // To access props later use this.props.someOption;
       this.props = props;
 
-      props.orgAbbreviation = props.organization.match(/\b(\w)/g).join('');
-      props.appNameSpace = props.projectName.toLowerCase().split(' ').join('.');
+      props.orgAbbreviation = props.organization.match(/\b(\w)/g).join(
+        '');
+      props.appNameSpace = props.projectName.toLowerCase().split(' ')
+        .join('.');
 
       done();
     }.bind(this));
   },
 
-  writing: function () {
+  writing: function() {
     // Add all files in the shared directory
     this.directory('shared', '.');
   },
 
-  install: function () {
+  install: function() {
     this.installDependencies();
   }
 });
