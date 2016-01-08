@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+set -u
+
+exec gosu atm /var/<%= props.appName %>/bin/<%= props.appName %> -Dconfig.file=/var/<%= props.appName %>/conf/server.conf -Dlogger.file=/var/<%= props.appName %>/conf/logback.xml
