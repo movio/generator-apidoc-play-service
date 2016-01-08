@@ -8,7 +8,7 @@ First, install [Yeoman](http://yeoman.io) and generator-apidoc-play-service usin
 ```bash
 npm install -g yo
 git clone git@bitbucket.org:moviohq/generator-apidoc-play-service.git
-cd generator-apidoc-libs
+cd generator-apidoc-play-service
 npm link
 ```
 
