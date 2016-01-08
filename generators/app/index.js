@@ -57,7 +57,7 @@ module.exports = yeoman.generators.Base.extend({
         return answers.useApidoc;
       },
       default: function (answers) {
-        return _.startCase(answers.projectName).split(' ').join('.');
+        return _.kebabCase(answers.projectName);
       }
     }, {
       type: 'input',
@@ -73,7 +73,8 @@ module.exports = yeoman.generators.Base.extend({
       // To access props later use this.props.someOption;
       this.props = props;
 
-      this.orgAbbreviation = props.organization.match(/\b(\w)/g).join('');
+      props.orgAbbreviation = props.organization.match(/\b(\w)/g).join('');
+      props.appNameSpace = props.projectName.toLowerCase().split(' ').join('.');
 
       done();
     }.bind(this));
