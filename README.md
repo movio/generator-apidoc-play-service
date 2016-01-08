@@ -7,12 +7,16 @@ First, install [Yeoman](http://yeoman.io) and generator-apidoc-play-service usin
 
 ```bash
 npm install -g yo
-npm install -g generator-apidoc-play-service
+git clone git@bitbucket.org:moviohq/generator-apidoc-play-service.git
+cd generator-apidoc-libs
+npm link
 ```
 
 Then generate your new project:
 
 ```bash
+mkdir <project-name>
+cd <project-name>
 yo apidoc-play-service
 ```
 
@@ -22,7 +26,7 @@ Yeoman has a heart of gold. He&#39;s a person with feelings and opinions, but he
 
 ## License
 
-Apache-2.0 © [kalmanb]()
+Apache-2.0 © [Movio]()
 
 
 [npm-image]: https://badge.fury.io/js/generator-apidoc-play-service.svg
