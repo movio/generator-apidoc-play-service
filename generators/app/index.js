@@ -41,6 +41,16 @@ module.exports = yeoman.generators.Base.extend({
       message: 'Max memory',
       default: '128'
     }, {
+      type: 'input',
+      name: 'jmxPort',
+      message: 'JMX PORT',
+      default: '5401'
+    }, {
+      type: 'input',
+      name: 'rmiHostname',
+      message: 'RMI Hostname',
+      default: 'dockerhost'
+    }, {
       type: 'confirm',
       name: 'useApidoc',
       message: 'Use apidoc',
