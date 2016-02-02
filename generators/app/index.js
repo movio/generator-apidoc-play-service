@@ -39,7 +39,7 @@ module.exports = yeoman.generators.Base.extend({
       type: 'input',
       name: 'maxMemory',
       message: 'Max memory',
-      default: '128'
+      default: '128m'
     }, {
       type: 'input',
       name: 'jmxPort',
