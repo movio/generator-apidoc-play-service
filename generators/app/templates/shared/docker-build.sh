@@ -19,6 +19,6 @@ fi
 
 rm -rf "$SERVICE_NAME"
 
-unzip "$SERVICE_NAME".zip
+unzip "target/universal/$SERVICE_NAME".zip
 
 docker build -t "docker.movio.co/$SERVICE_NAME:$TAG" .
