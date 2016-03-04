@@ -1,23 +1,19 @@
-FROM docker.movio.co/java-8:6.0.0
-
-EXPOSE 9000
+FROM <%= props.dockerBaseImage %>
 
 ENV JMX_PORT <%= props.jmxPort %>
 ENV SVC_MAX_MEMORY <%= props.maxMemory %>
-ENV RMI_HOSTNAME <%= props.rmiHostname %>
 
-# Move up once finialised
-RUN mkdir /var/<%= props.appName %> \
-  && groupadd -g 1012 atm \
-  && useradd -u 1012 -g atm atm -d /var/<%= props.appName %> -s /bin/false \
-  && chown -R atm:atm /var/<%= props.appName %>
+RUN mkdir /opt/play-svc \
+  && groupadd -g <%= props.dockerUserGroupId %> <%= props.dockerUserGroupName %> \
+  && useradd -u <%= props.dockerUserId %> -g <%= props.dockerUserGroupName %> <%= props.dockerUserName %> -d /opt/play-svc -s /bin/false
 
-WORKDIR /var/<%= props.appName %>
+WORKDIR /opt/play-svc
 
-COPY <%= props.appName %>/lib /var/<%= props.appName %>/lib
-COPY <%= props.appName %>/bin /var/<%= props.appName %>/bin
+COPY target/universal/stage/lib /opt/play-svc/lib
+COPY target/universal/stage/bin /opt/play-svc/bin
+COPY target/universal/stage/conf /opt/play-svc/conf
+
+RUN chown -R <%= props.dockerUserGroupName %>:<%= props.dockerUserName %> /opt/play-svc
 
 COPY src/main/docker/bin /usr/local/bin/
 COPY src/main/docker/etc /etc/
-
-COPY conf /var/<%= props.appName %>/conf

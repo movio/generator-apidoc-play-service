@@ -47,9 +47,29 @@ module.exports = yeoman.generators.Base.extend({
       default: '5401'
     }, {
       type: 'input',
-      name: 'rmiHostname',
-      message: 'RMI Hostname',
-      default: 'dockerhost'
+      name: 'dockerUserGroupId',
+      message: 'Group id to put running user under',
+      default: '1012'
+    }, {
+      type: 'input',
+      name: 'dockerUserGroupName',
+      message: 'Group name to put running user under',
+      default: 'microservices'
+    }, {
+      type: 'input',
+      name: 'dockerUserId',
+      message: 'User id for the user to run the service',
+      default: '1012'
+    }, {
+      type: 'input',
+      name: 'dockerUserName',
+      message: 'User name for the user to run the service',
+      default: 'microservices'
+    }, {
+      type: 'input',
+      name: 'dockerBaseImage',
+      message: 'Image url to build the docker image from',
+      default: 'java:8'
     }, {
       type: 'confirm',
       name: 'useApidoc',
