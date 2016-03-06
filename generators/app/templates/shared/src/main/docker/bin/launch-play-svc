@@ -3,4 +3,4 @@
 set -e
 set -u
 
-exec gosu <%= props.dockerUserName %> /opt/play-svc/bin/<%= props.appName %> -Dlogger.file=/opt/play-svc/conf/logback.xml -Dcom.sun.management.jmxremote.port=$JMX_PORT  -Dcom.sun.management.jmxremote.rmi.port=$JMX_PORT -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -J-Xms0m -J-Xmx${SVC_MAX_MEMORY}
+exec gosu <%= props.dockerUserName %> /opt/play-svc/bin/<%= props.appName %> -Dconfig.file=/var/mc-member-svc-app/conf/application.conf -Dlogger.file=/opt/play-svc/conf/logback.xml -Dcom.sun.management.jmxremote.port=$JMX_PORT  -Dcom.sun.management.jmxremote.rmi.port=$JMX_PORT -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -J-Xms0m -J-Xmx${SVC_MAX_MEMORY}
