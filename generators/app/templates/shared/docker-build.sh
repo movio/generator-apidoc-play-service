@@ -2,6 +2,7 @@
 
 set -e
 
+DOCKER_REPO=<%= props.dockerRepoUrl %>
 SERVICE_NAME=<%= props.appName %>
 TAG=$1
 

@@ -37,6 +37,18 @@ module.exports = yeoman.generators.Base.extend({
       }
     }, {
       type: 'input',
+      name: 'gitRepoUrl',
+      message: 'Git Repo URL',
+      default: function(answers) {
+          return 'http://github.com/movio/' + answers.appName;
+      }
+    }, {
+        type: 'confirm',
+        name: 'testsRequireMysql',
+        message: 'Tests will require Mysql?',
+        store: true
+    }, {
+      type: 'input',
       name: 'maxMemory',
       message: 'Max memory',
       default: '128m'
@@ -70,6 +82,11 @@ module.exports = yeoman.generators.Base.extend({
       name: 'dockerBaseImage',
       message: 'Image url to build the docker image from',
       default: 'java:8'
+    }, {
+        type: 'input',
+        name: 'dockerRepoUrl',
+        message: 'What docker repo do you want to push the image to?',
+        default: ''
     }, {
       type: 'confirm',
       name: 'useApidoc',
