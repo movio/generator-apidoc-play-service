@@ -132,6 +132,11 @@ module.exports = yeoman.generators.Base.extend({
       props.appNameSpace = props.projectName.toLowerCase().split(' ')
         .join('.');
 
+        if (props.dockerRepoUrl.length > 0 && props.dockerRepoUrl.indexOf('/', props.dockerRepoUrl.length - 1) === -1) {
+          props.dockerRepoUrl += "/";
+      }
+
+      props.gitCloneUrl = props.gitRepoUrl.replace(/https:\/\//g, "git@");
       done();
     }.bind(this));
   },
