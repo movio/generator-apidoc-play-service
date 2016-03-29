@@ -4,7 +4,7 @@ organization := "<%= props.organization %>"
 
 name := "<%= props.appName %>"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
 lazy val svc = project.in(file("."))
   .settings(commonSettings: _*)
@@ -16,11 +16,11 @@ lazy val svc = project.in(file("."))
       "com.google.inject" % "guice" % "4.0",
 
       // MYSQL
-      "com.typesafe.play" %% "play-slick" % "1.0.1",
-      "com.typesafe.play" %% "play-slick-evolutions" % "1.0.1",
+      "com.typesafe.play" %% "play-slick" % "2.0.0",
+      "com.typesafe.play" %% "play-slick-evolutions" % "2.0.0",
       "com.pellucid" %% "case-config" % "0.1.2",
-      "com.github.tototoshi" %% "slick-joda-mapper" % "2.0.0",
-      "mysql" % "mysql-connector-java" % "5.1.37" % Runtime,
+      "com.github.tototoshi" %% "slick-joda-mapper" % "2.1.0",
+      "mysql" % "mysql-connector-java" % "5.1.38" % Runtime,
 
       // Kafka
       "mc" %% "kafka-testkit" % "1.3.3" % Test,
@@ -30,7 +30,7 @@ lazy val svc = project.in(file("."))
 
       // TEST
       "mm" %% "testinglib" % "1.0.0" % Test,
-      "org.scalatestplus" %% "play" % "1.4.0-M4" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.0" % Test
     ) ++ Dependencies.apidocDependencies, // project/Dependencies.scala (generated)
 
     javaOptions in Test += "-Dconfig.file=test/resources/application.conf",
@@ -45,7 +45,7 @@ releaseVersionBump := sbtrelease.Version.Bump.Minor
 releaseTagName := version.value.toString
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.11.7",
+  scalaVersion := "2.11.8",
   packageName in Universal := moduleName.value,
 
   resolvers ++= Seq(
