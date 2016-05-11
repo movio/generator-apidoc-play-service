@@ -31,7 +31,7 @@ def dockerJob = new DockerJob
   (
     script: this,
     build: sbtBuild,
-    namespace: "<%= props.organization",
+    namespace: "<%= props.organization %>",
   )
 
 def seedJob = new SeedJob
