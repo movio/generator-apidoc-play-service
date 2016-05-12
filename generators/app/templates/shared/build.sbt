@@ -4,7 +4,7 @@ organization := "<%= props.organization %>"
 
 name := "<%= props.appName %>"
 
-scalaVersion := "2.11.8"
+scalaVersion in ThisBuild := "2.11.8"
 
 lazy val svc = project.in(file("."))
   .settings(commonSettings: _*)
