@@ -23,4 +23,8 @@ if [ -z "$TAG" ] ; then
   exit
 fi
 
+rm -rf "$SERVICE_NAME"
+
+unzip "$SERVICE_NAME".zip
+
 docker build -t "${DOCKER_REPO}${SERVICE_NAME}:${TAG}" .

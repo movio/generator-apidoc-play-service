@@ -4,7 +4,7 @@ organization := "<%= props.organization %>"
 
 name := "<%= props.appName %>"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
 lazy val svc = project.in(file("."))
   .settings(commonSettings: _*)
@@ -65,9 +65,22 @@ releaseVersion := { ver =>
     sbtrelease.Version(ver).map(_.withoutQualifier.string).getOrElse(sbtrelease.versionFormatError)
   )
 }
+publish <<= (publish) dependsOn  dist
+
+publishLocal <<= (publishLocal) dependsOn dist
+
+val publishDist = TaskKey[File]("dist-publish", "Publish dist")
+
+artifact in publishDist ~= { (art: Artifact) => art.copy(`type` = "zip", extension = "zip") }
+
+val publishDistSettings = Seq[Setting[_]] (
+  publishDist <<= (target in Universal, normalizedName, version) map { (targetDir, id, version) =>
+    val packageName = "%s" format(id)
+    targetDir / (packageName + ".zip")
+  }) ++ Seq(addArtifact(artifact in publishDist, publishDist).settings: _*)
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.11.7",
+  scalaVersion := "2.11.8",
   packageName in Universal := moduleName.value,
 
   resolvers ++= Seq(
@@ -75,6 +88,17 @@ lazy val commonSettings = Seq(
     "Movio" at "https://artifactory.movio.co/artifactory/repo",
     "Pellucid Bintray" at "http://dl.bintray.com/pellucid/maven"
   ),
+
+
+  // Optional
+  // Disable jar for this project (useless)
+  publishArtifact in (Compile, packageBin) := false,
+
+  // Disable scaladoc generation for this project (useless)
+  publishArtifact in (Compile, packageDoc) := false,
+
+  // Disable source jar for this project (useless)
+  publishArtifact in (Compile, packageSrc) := false,
 
   scalacOptions ++= Seq(
     "-Xlint",
@@ -91,4 +115,4 @@ lazy val commonSettings = Seq(
   },
 
   fork in Test := true
-)
+) ++ publishDistSettings
