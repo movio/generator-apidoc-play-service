@@ -65,6 +65,7 @@ releaseVersion := { ver =>
     sbtrelease.Version(ver).map(_.withoutQualifier.string).getOrElse(sbtrelease.versionFormatError)
   )
 }
+
 publish <<= (publish) dependsOn  dist
 
 publishLocal <<= (publishLocal) dependsOn dist
