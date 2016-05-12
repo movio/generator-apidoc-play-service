@@ -1,5 +1,7 @@
 FROM <%= props.dockerBaseImage %>
 
+EXPOSE 9000
+
 ENV JMX_PORT <%= props.jmxPort %>
 ENV SVC_MAX_MEMORY <%= props.maxMemory %>
 
