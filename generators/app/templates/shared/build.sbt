@@ -11,6 +11,7 @@ lazy val svc = project.in(file("."))
   .settings(
     libraryDependencies ++= Seq(
       "joda-time" % "joda-time" % "2.7",
+      "net.logstash.logback" % "logstash-logback-encoder" % "4.5.1",
 
       // DI
       "com.google.inject" % "guice" % "4.0",

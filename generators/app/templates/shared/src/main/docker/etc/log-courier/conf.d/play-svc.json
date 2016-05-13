@@ -3,6 +3,7 @@
     "/var/log/supervisor/play-svc.log"
   ],
   "fields": {
-    "type": "<%= props.appName %>"
+    "type": "<%= props.appName %>",
+    "codec": "json"
   }
 }]

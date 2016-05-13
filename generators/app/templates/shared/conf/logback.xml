@@ -1,20 +1,30 @@
 <configuration debug="false" scan="true" scanPeriod="30 seconds">
-    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
 
-    <property name="defaultPattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %ex%n" />
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+      <providers>
+        <timestamp />
+        <message />
+        <loggerName />
+        <threadName />
+        <logLevel />
+        <stackTrace />
+        <context />
+        <arguments>
+          <fieldName>arguments</fieldName>
+        </arguments>
+      </providers>
+    </encoder>
+  </appender>
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>${defaultPattern}</pattern>
-        </encoder>
-    </appender>
+  <logger name="services" level="DEBUG" />
+  <logger name="controllers" level="DEBUG" />
+  <logger name="models" level="DEBUG" />
+  <logger name="movio" level="DEBUG" />
+  <logger name="akka" level="INFO" />
 
-    <logger name="com.jolbox.bonecp" level="ERROR">
-        <appender-ref ref="CONSOLE" />
-    </logger>
-
-    <root level="INFO">
-      <appender-ref ref="CONSOLE" />
-    </root>
+  <root level="${LOG_LEVEL:-INFO}">
+    <appender-ref ref="CONSOLE" />
+  </root>
 
 </configuration>
