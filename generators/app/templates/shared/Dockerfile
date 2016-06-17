@@ -1,5 +1,7 @@
 FROM <%= props.dockerBaseImage %>
 
+EXPOSE 9000
+
 ENV JMX_PORT <%= props.jmxPort %>
 ENV SVC_MAX_MEMORY <%= props.maxMemory %>
 
@@ -47,9 +49,9 @@ RUN mkdir /opt/play-svc \
 
 WORKDIR /opt/play-svc
 
-COPY target/universal/stage/lib /opt/play-svc/lib
-COPY target/universal/stage/bin /opt/play-svc/bin
-COPY target/universal/stage/conf /opt/play-svc/conf
+COPY <%= props.appName %>/lib /opt/play-svc/lib
+COPY <%= props.appName %>/bin /opt/play-svc/bin
+COPY <%= props.appName %>/conf /opt/play-svc/conf
 
 RUN chown -R <%= props.dockerUserGroupName %>:<%= props.dockerUserName %> /opt/play-svc
 

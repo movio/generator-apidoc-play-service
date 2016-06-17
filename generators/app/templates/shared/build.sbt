@@ -4,13 +4,14 @@ organization := "<%= props.organization %>"
 
 name := "<%= props.appName %>"
 
-scalaVersion := "2.11.7"
+scalaVersion in ThisBuild := "2.11.8"
 
 lazy val svc = project.in(file("."))
   .settings(commonSettings: _*)
   .settings(
     libraryDependencies ++= Seq(
       "joda-time" % "joda-time" % "2.7",
+      "net.logstash.logback" % "logstash-logback-encoder" % "4.5.1",
 
       // DI
       "com.google.inject" % "guice" % "4.0",
@@ -40,12 +41,48 @@ lazy val svc = project.in(file("."))
   )
   .enablePlugins(PlayScala)
 
-
+// ------------------------
+// Release Settings
+// ------------------------
+// Release Process:
+// Manual:
+//   sbt
+//   > release
+//   > Release version [0.1.0] : ...
+// Automatic:
+//   sbt -Drelease_version=1.0.1 "release with-defaults"
 releaseVersionBump := sbtrelease.Version.Bump.Minor
-releaseTagName := version.value.toString
+releaseTagName := version.value
+
+val manualReleaseVersion = settingKey[String]("We're going to manage the version")
+manualReleaseVersion := sys.props.get("release_version").getOrElse(
+  if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value
+)
+
+releaseTagName := manualReleaseVersion.value
+
+releaseVersion := { ver =>
+  sys.props.get("release_version").getOrElse(
+    sbtrelease.Version(ver).map(_.withoutQualifier.string).getOrElse(sbtrelease.versionFormatError)
+  )
+}
+
+publish <<= (publish) dependsOn  dist
+
+publishLocal <<= (publishLocal) dependsOn dist
+
+val publishDist = TaskKey[File]("dist-publish", "Publish dist")
+
+artifact in publishDist ~= { (art: Artifact) => art.copy(`type` = "zip", extension = "zip") }
+
+val publishDistSettings = Seq[Setting[_]] (
+  publishDist <<= (target in Universal, normalizedName, version) map { (targetDir, id, version) =>
+    val packageName = "%s" format(id)
+    targetDir / (packageName + ".zip")
+  }) ++ Seq(addArtifact(artifact in publishDist, publishDist).settings: _*)
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.11.7",
+  scalaVersion := "2.11.8",
   packageName in Universal := moduleName.value,
 
   resolvers ++= Seq(
@@ -53,6 +90,17 @@ lazy val commonSettings = Seq(
     "Movio" at "https://artifactory.movio.co/artifactory/repo",
     "Pellucid Bintray" at "http://dl.bintray.com/pellucid/maven"
   ),
+
+
+  // Optional
+  // Disable jar for this project (useless)
+  publishArtifact in (Compile, packageBin) := false,
+
+  // Disable scaladoc generation for this project (useless)
+  publishArtifact in (Compile, packageDoc) := false,
+
+  // Disable source jar for this project (useless)
+  publishArtifact in (Compile, packageSrc) := false,
 
   scalacOptions ++= Seq(
     "-Xlint",
@@ -69,4 +117,4 @@ lazy val commonSettings = Seq(
   },
 
   fork in Test := true
-)
+) ++ publishDistSettings

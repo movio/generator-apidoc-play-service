@@ -2,6 +2,7 @@
 
 set -e
 
+DOCKER_REPO=<%= props.dockerRepoUrl %>
 SERVICE_NAME=<%= props.appName %>
 TAG=$1
 
@@ -21,5 +22,9 @@ if [ -z "$TAG" ] ; then
   echo "./docker-build.sh latest"
   exit
 fi
+
+rm -rf "$SERVICE_NAME"
+
+unzip "$SERVICE_NAME".zip
 
 docker build -t "${DOCKER_REPO}${SERVICE_NAME}:${TAG}" .
