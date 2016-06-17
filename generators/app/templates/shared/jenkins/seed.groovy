@@ -12,7 +12,9 @@ def sbtBuild = new SbtBuild
     gitRepo: "<%= props.gitCloneUrl %>",
     testReportRegex: "**/target/test-reports/*.xml",
     requiresMysql: <%= props.testsRequireMysql %>,
+    hasDockerBuild: true,
   )
+  
 
 def sbtCiJob = new SbtJob
   (
